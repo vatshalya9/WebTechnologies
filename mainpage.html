@@ -1,0 +1,103 @@
+<!-- File to select the user input file text data and replace the string with the new string entered by user using Html,css,JavaScript/jQuery...!! -->
+
+
+<!DOCTYPE html>
+<html>
+    <title>Text Change Web Page</title>
+    <head>
+	<!-- for jQuery google cdn -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="styles.css">
+        <script>
+        //Function to open the file entered in the input box
+                function PrintElem(event)
+                {
+                    var selectedFile = event.target.files[0];
+                    var reader = new FileReader();
+                    var result = document.getElementById("mydiv");
+                    //var out = result.split(" ");
+                    reader.onload = function(event) {
+                        result.innerHTML = event.target.result;
+                    };
+                    reader.readAsText(selectedFile);
+                    console.log(selectedFile);
+                    //Popup($('#mydiv').html());
+                }
+                function Popup(elam) 
+                {
+                    //console.log($(elam).html());return false;
+                    var data = $(elam).html();
+                    var mywindow = window.open('', 'my div', 'height=400,width=600');
+                    mywindow.document.write('<html><head><title>my div</title>');
+                    /*optional stylesheet*/ //mywindo w.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+                    mywindow.document.write('</head><body >');
+                    mywindow.document.write(data);
+                    mywindow.document.write('</body></html>');
+
+                    mywindow.document.close(); // necessary for IE >= 10
+                    mywindow.focus(); // necessary for IE >= 10
+
+                    mywindow.print();
+                    mywindow.close();
+
+                    return true;
+                }
+                //function for highlight the text entered.
+               /* (function ($) {
+                	function highlight(word) {
+                 	 var element = $('.match');
+                  	var rgxp = new RegExp('(>[^<.]*)(' +word+ ')([^<.]*)','gi');//for caseinsensitive
+                  	var repl = '<span class="match">' + word + '</span>';//match span
+                  	element.html(element.html().replace(word, repl));
+
+                }
+                $(".filterinput").keyup(function(){
+                    var word = $(this).val();
+                    highlight(word);
+                })
+                }(jQuery));*/
+</script>
+    </head>
+    <body>
+    <div class="container">
+        <header>
+            <h1>Changing Text</h1>
+        </header>
+        <article>
+            <div id="mydiv">
+            <input type="file" onchange="PrintElem(event)">
+	    </div>
+	    <h4> Enter the text to Search</h4></br>
+	    <input id ="text" />
+	    <h4> Enter the text to Replace</h4></br>
+	    <input id ="replace" />
+	    <button id="try"> Replace </button>
+	    <script src="highlight.js" type="text/javascript"></script>
+	    <script>
+	    //Function for replacing the text with new string
+	    $(document).ready(function(){
+	    	$("button").click(function(){
+            		var textarea = $("#mydiv");
+            		var string = $("#text").val();//search
+            		var res = $("#replace").val();//replace
+            		textarea.html(textarea.html().replace(string,res));
+            })	
+            })
+           </script>
+	   <h5> Click here to download the updated file</h5>
+   	   <button id="save" onClick="download()"> SAVE FILE </button>
+           </div>
+           
+   	   <script type="text/javascript">
+	   function download(){
+	   var a = document.body.appendChild(
+			document.createElement("a")
+		);
+		 a.download = "export.html";
+		 a.href = "data:text/html," + document.getElementById("mydiv").innerHTML;
+		 a.click();
+	   </script>
+	 </article>
+     </body>
+<footer>Copyright &copy; TextChange.com</footer>
+</html>
