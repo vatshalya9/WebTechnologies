@@ -1,0 +1,27 @@
+//update the in stock values with second array.
+<?php
+$inventory =array( array("name" => "bat" , "in stock" => 5 ,"per item cost" => 3.50),
+	     array("name" => "ball", "in stock" => 4 ,"per item cost" => 0.50),
+	     array("name" => "base", "in stock" => 3 ,"per item cost" => 5.00),
+	     array("name" => "umpire", "in stock" => 2 ,"per item cost" => 10000.0),	
+	     array("name" => "player", "in stock" => 4 ,"per item cost" => 5000.0) );
+echo "The total sum of the in stock values is : ";
+
+$new_inventory =array( array("name" => "bat" , "in stock" => 4 ,"per item cost" => 3.50),
+                array("name" => "ball", "in stock" => 0,"per item cost" => 0.50),
+	             array("name" => "base", "in stock" => 0 ,"per item cost" => 5.00),
+	             array("name" => "umpire", "in stock" => 0 ,"per item cost" => 10000.0),	
+                array("name" => "player", "in stock" => -1 ,"per item cost" => 5000.0) );      
+$i = 0;
+$sum = array();
+$in_stocks = array_column($inventory,'in stock');
+$in_stocks1 = array_column($new_inventory,'in stock');
+$name = array_column($inventory,'name');
+print_r($name);
+for($i = 0; $i < 5;$i++)
+{
+$sum = $in_stocks[$i]+$in_stocks1[$i];
+print_r($sum.'<br/>');
+}
+
+?>
