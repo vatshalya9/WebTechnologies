@@ -1,1 +1,1 @@
-
+HTML/Javascript with Ajax (client-side) and php/database (server-side) to output all records of any table in the database (your choice of table). On the displayed page, include all XMLHttpRequest object state change information whenever the object's onreadystatechange property changes. Include readyState, responseText (use a small table) and status. When the XMLHttpRequest object has status == 200, then output the table information on the displayed page.
