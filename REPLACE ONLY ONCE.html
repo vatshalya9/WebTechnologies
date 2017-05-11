@@ -1,0 +1,118 @@
+
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+  <title>Sample - Search String</title>  
+    <script type="text/javascript">
+
+        function selectFile(fileObj)
+        {
+            var selectedFile = fileObj.files[0];
+            var reader = new FileReader();
+            var result = document.getElementById("div-result");
+            reader.onload = function(event) {
+                result.innerHTML = event.target.result;
+            };
+            reader.readAsText(selectedFile);
+            console.log(selectedFile);
+        }
+
+        function SearchString()
+        {
+            var searValue = document.getElementById("input-searchText").value;
+            var divResult = document.getElementById("div-result");
+            var regex = prepareRegEx(searValue);
+            var output = divResult.innerHTML.replace(regex,function(str){
+                return "<span style='background-color:yellow;'>" + str + "</span>";
+            });
+
+            divResult.innerHTML = output;
+        }
+
+        function replceString(repalceObj)
+        {
+            var repalceText = document.getElementById("input-replaceText").value;
+            //<TAG\b[^>]*>(.*?)</TAG>
+             var regex =  new RegExp('<span style="background-color:yellow;">(.*?)</span>',"gi");
+             var divResult = document.getElementById("div-result").innerHTML;
+             document.getElementById("div-result").innerHTML = divResult.replace(regex,repalceText);
+        }
+
+        // prepare RegExp as given rules
+        function prepareRegEx(str)
+        {
+            var searValue = str;
+            // regex 1
+            for(i = 0;i < str.length;i++)
+            {
+                searValue += '|' + str.substring(0, i) + str.substring(i+1, str.length);
+            }
+            // reg 2
+            var array = str.split('');
+            for(i = 0;i < array.length-1 ;i++)
+            {
+                var x = array[i];
+                var y = array[i+1];
+                array[i] = y;
+                array[i+1] = x;
+                searValue += '|' + array.toString().replace(/,/g,'');
+            }
+            return new RegExp(searValue,'gi');
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+     <header>
+            <h1>Changing Text</h1>
+        </header>
+     <article>
+            <div id="mydiv">
+         
+    <table>
+        <thead>
+            <tr>
+                <th style="padding-bottom:10px;">Sample Text Search</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Select File: </td> 
+                <td>
+                <input type="file" id="input-file" onchange="selectFile(this);"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Search Text: </td>
+                 <td>
+                <input type="text" id="input-searchText" />
+                </td>
+            </tr>
+            <tr>
+                <td>Replace Text: </td>
+                 <td>
+                <input type="text" id="input-replaceText" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center;padding-top:10px;">
+                    <input type="button" value="Search" onclick="SearchString();"/>
+                    <input type="button" value="Replace" onclick="replceString();"/>
+                </td>
+            </tr>
+        </tbody>
+    </table></div>
+    <span style="font-weight:bold;text-decoration:underline">Result:</span><br/>
+    <div id="div-result"></div>
+    </article>div>
+</body>
+<footer>Copyright &copy; TextChange.com</footer>
+</html>
+
+
+
+
+
